@@ -3,7 +3,7 @@ Desire2Learn Fixes
 
 Desire 2 Learn is a common platform for universities to administer online classes.  While it works, it has many flaws - which I am trying to fix to make it useable on real browsers (Chrome / Firefox).
 
-Forked Refuse2Logout for the logout script, added my own for highlighting and targeting my school's system.
+Forked [Refuse2Logout](https://github.com/vtsatskin/Refuse2Logout) for the logout script, added more for highlighting and targeting my school's system.
 
 How to Install
 --------------
@@ -17,3 +17,8 @@ Contributers
 
 * [vtsatskin](https://github.com/vtsatskin)
 * [1337](https://github.com/1337)
+
+Planned Additions
+-----------------
+# Mark mail as "read" when opened.
+# Remove bloat along the top bar.
