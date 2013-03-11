@@ -1,10 +1,11 @@
 // ==UserScript==
-// @name           Desire2Learn Fixes [Refuse2Logout]
-// @namespace      http://github.com/nerdwaller
-// @include        https://worldclass.regis.edu/*
-// @match		   https://worldclass.regis.edu/*
-// @description    Fixes various issues with the D2L platform. 
-// @version        0.1
+// @name 			Desire2Learn Fixes [Refuse2Logout]
+// @author			Matt Rasband [nerdwaller] Check readme for contribs.
+// @namespace		http://github.com/nerdwaller
+// @include			https://worldclass.regis.edu/*
+// @match			https://worldclass.regis.edu/*
+// @description		Fixes various issues with the D2L platform. 
+// @version			0.1
 // ==/UserScript==
 
 var discussRegex = new RegExp("d2l/lms/discussions(/|$)");
