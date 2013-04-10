@@ -20,5 +20,5 @@ Contributers
 
 Planned Additions
 -----------------
-# Mark mail as "read" when opened.
-# Remove bloat along the top bar.
+* Mark mail as "read" when opened.
+* Remove bloat along the top bar.
