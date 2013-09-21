@@ -10,10 +10,16 @@
 
 var discussRegex = new RegExp("d2l/lms/discussions(/|$)");
 var emailRegex = new RegExp("d2l/lms/email(/|$)");
+var messageRegex = new RegExp("^/d2l/lms/discussions/messageLists/message_update");
 
 if (document.URL.match(discussRegex)) {
 	processPosts();
 	processDiscussionList();
+}
+
+if (window.location.pathname.match(messageRegex)) {
+    // timeout is needed because the frame may not have fully loaded
+    setTimeout(enableSpellcheck, 300);
 }
 
 removeLinkDecorations();
@@ -88,4 +94,25 @@ function addHighlight (elem) {
 
 function removeHighlight() {
 	this.removeAttribute('style', 'background-color');
+}
+
+function enableSpellcheck() {
+    function remove_spellcheck(doc) {
+        var list = convertToArray(doc.getElementsByTagName('body'));
+        list.forEach(function(body) {
+            body.removeAttribute("spellcheck");
+        });
+    }
+    
+    function process_frames(doc) {
+        var list = convertToArray(doc.getElementsByTagName("iframe"));
+        list.forEach(function(frame) {
+            remove_spellcheck(frame.contentDocument);
+            process_frames(frame.contentDocument);
+        });
+
+        remove_spellcheck(doc);
+    }
+
+    process_frames(document);
 }
