@@ -10,6 +10,7 @@
 
 var discussRegex = new RegExp("d2l/lms/discussions/");
 var emailRegex = new RegExp("d2l/lms/email(/|$)");
+var messageRegex = new RegExp("^/d2l/lms/discussions/messageLists/message_update");
 
 if (document.URL.match(discussRegex)) {
     addStylesheet();
@@ -20,6 +21,11 @@ if (document.URL.match(discussRegex)) {
     setTimeout(function() {
 	    D2L.PT.Auth.SessionTimeout.m_timeoutIsHandled = true;
     }, 5000);
+}
+
+if (window.location.pathname.match(messageRegex)) {
+    // timeout is needed because the frame may not have fully loaded
+    setTimeout(enableSpellcheck, 300);
 }
 
 removeLinkDecorations();
@@ -135,4 +141,25 @@ function removeCurrent() {
 function makeCurrent(e) {
     removeCurrent();
     this.classList.add('gm-active');
+}
+
+function enableSpellcheck() {
+    function remove_spellcheck(doc) {
+        var list = convertToArray(doc.getElementsByTagName('body'));
+        list.forEach(function(body) {
+            body.removeAttribute("spellcheck");
+        });
+    }
+    
+    function process_frames(doc) {
+        var list = convertToArray(doc.getElementsByTagName("iframe"));
+        list.forEach(function(frame) {
+            remove_spellcheck(frame.contentDocument);
+            process_frames(frame.contentDocument);
+        });
+
+        remove_spellcheck(doc);
+    }
+
+    process_frames(document);
 }
