@@ -16,11 +16,6 @@ if (document.URL.match(discussRegex)) {
     addStylesheet();
 	processPosts();
 	processDiscussionList();
-	
-	// prevents the popup
-    setTimeout(function() {
-	    D2L.PT.Auth.SessionTimeout.m_timeoutIsHandled = true;
-    }, 5000);
 }
 
 if (window.location.pathname.match(messageRegex)) {
@@ -41,6 +36,8 @@ window.addEventListener('load', function () {
                 oReq.onreadystatechange = function (oEvent) {
                   if (oReq.readyState === 4) {
                     if (oReq.status === 200) {
+                      // prevents the 'session expired' alert
+	                  D2L.PT.Auth.SessionTimeout.m_timeoutIsHandled = true;
                       console && console.log && console.log("Successfully polled D2L!");
                     } else {
                       console && console.error && console.error("Polling error: ", oReq.statusText);
