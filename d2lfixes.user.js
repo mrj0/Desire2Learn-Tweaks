@@ -18,11 +18,6 @@ if (document.URL.match(discussRegex)) {
 	processDiscussionList();
 }
 
-if (window.location.pathname.match(messageRegex)) {
-    // timeout is needed because the frame may not have fully loaded
-    setTimeout(enableSpellcheck, 300);
-}
-
 removeLinkDecorations();
 
 // Forked from Refuse2Logout
@@ -51,6 +46,17 @@ window.addEventListener('load', function () {
         };
 
     setInterval(tapItLikeItsHot, POLL_INTERVAL);
+
+    if (window.hasOwnProperty('tinyMCE')) {
+       var original_init = tinyMCE.init;
+       tinyMCE.init = function() {
+           settings = arguments[0];
+           settings.browser_spellcheck = true;
+           settings.gecko_spellcheck = true;
+           
+           return original_init.apply(this, arguments);
+       };
+    }
 });
 
 function addStylesheet() {
@@ -138,25 +144,4 @@ function removeCurrent() {
 function makeCurrent(e) {
     removeCurrent();
     this.classList.add('gm-active');
-}
-
-function enableSpellcheck() {
-    function remove_spellcheck(doc) {
-        var list = convertToArray(doc.getElementsByTagName('body'));
-        list.forEach(function(body) {
-            body.removeAttribute("spellcheck");
-        });
-    }
-    
-    function process_frames(doc) {
-        var list = convertToArray(doc.getElementsByTagName("iframe"));
-        list.forEach(function(frame) {
-            remove_spellcheck(frame.contentDocument);
-            process_frames(frame.contentDocument);
-        });
-
-        remove_spellcheck(doc);
-    }
-
-    process_frames(document);
 }
